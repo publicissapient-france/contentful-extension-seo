@@ -1,7 +1,7 @@
 {
   "name": "contentful-extension-seo",
   "version": "0.1.0",
-  "private": false,
+  "private": true,
   "devDependencies": {
     "@babel/core": "7.3.4",
     "@babel/plugin-proposal-class-properties": "7.3.4",
@@ -33,7 +33,6 @@
     "babel-plugin-syntax-dynamic-import": "6.18.0",
     "contentful-ui-extensions-sdk": "3.5.0",
     "debounce-fn": "^1.0.0",
-    "fsevents": "2.1.2",
     "jodit-react": "1.0.26",
     "lodash": "4.17.11",
     "prismjs": "1.16.0",
@@ -67,5 +66,6 @@
     "last 5 Chrome version",
     "> 1%",
     "not ie <= 11"
-  ]
+  ],
+  "optionalDependencies": {}
 }
