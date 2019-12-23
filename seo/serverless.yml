@@ -1,0 +1,21 @@
+service: contentful-extension-seo
+frameworkVersion: ">=1.38.0 <2.0.0"
+
+provider:
+  name: aws
+  region: eu-west-1
+  stage: prod
+  environment:
+    EXTENSIONS_BUCKET_NAME: xebiafr-${self:custom.stage}-contentful-extensions-bucket
+
+plugins:
+  - serverless-s3-sync
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  s3Sync:
+    # This is definitely a hack. See README for more informations
+    - bucketName: ${self:provider.environment.EXTENSIONS_BUCKET_NAME}
+      localDir: build
+      bucketPrefix: seo
+      acl: public-read

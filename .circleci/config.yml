@@ -1,0 +1,76 @@
+version: 2
+
+jobs:
+  "Build - Seo extension":
+    docker:
+      # Image built from the Dockerfile in the current repository
+      - image: xebiafrance/contentful-extensions-build-container:v1
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            # Find a cache corresponding to this specific package-lock.json checksum
+            # when this file is changed, this key will fail
+            - seo/v1-npm-deps-{{ checksum "seo/package-lock.json" }}
+            # Find the most recently generated cache used from any branch
+            - seo/v1-npm-deps-
+      - run:
+          name: Build React app
+          command: |
+            cd seo/
+            npm install
+            npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - seo/build
+            - seo/serverless.yml
+      - save_cache:
+          key: seo/v1-npm-deps-{{ checksum "seo/package-lock.json" }}
+          paths:
+            - "seo/.node_modules"
+
+  "Package Serverless - Seo extension":
+    docker:
+      # Image built from the Dockerfile in the current repository
+      - image: xebiafrance/contentful-extensions-build-container:v1
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Create Serverless packages
+          command: |
+            cd seo/
+            serverless package -p package-prod -s prod
+      - persist_to_workspace:
+          root: .
+          paths:
+            - seo/build
+            - seo/package-prod
+            - seo/serverless.yml
+
+  "Deploy - Seo extension":
+    docker:
+      # Image built from the Dockerfile in the current repository
+      - image: xebiafrance/contentful-extensions-build-container:v1
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Deploy to AWS S3
+          command: |
+            cd seo/
+            serverless deploy --force -p package-prod -s prod
+
+workflows:
+  version: 2
+  full:
+    jobs:
+      - "Build - Seo extension"
+      - "Package Serverless - Seo extension":
+          requires:
+            - "Build - Seo extension"
+      - "Deploy - Seo extension":
+          context: "Contentful Extensions - AWS Deployment"
+          requires:
+            - "Package Serverless - Seo extension"

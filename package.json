@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "serverless": "^1.38.0",
+    "serverless-s3-sync": "1.7.3"
+  }
+}

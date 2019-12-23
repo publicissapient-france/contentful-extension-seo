@@ -1,0 +1,7 @@
+{
+  "id": "seo",
+  "name": "Seo",
+  "srcdoc": "./build/index.html",
+  "sidebar": false,
+  "fieldTypes": ["Object"]
+}

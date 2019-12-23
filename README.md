@@ -1,1 +1,3 @@
-# contentful-extension-seo
+# Contentful extensions 
+
+Seo extension
