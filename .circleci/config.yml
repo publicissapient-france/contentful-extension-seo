@@ -86,15 +86,7 @@ jobs:
       - run:
          name: Deploy to production bucket
          command: |
-          aws s3 ls --recursive s3://xebiafr-prod-contentful-extensions-bucket/seo
-          aws s3 ls --recursive s3://xebiafr-prod-contentful-extensions-bucket/seo | sort
-          aws s3 ls --recursive s3://xebiafr-prod-contentful-extensions-bucket/seo | sort | tail -n 2
-          aws s3 ls --recursive s3://xebiafr-prod-contentful-extensions-bucket/seo | sort | tail -n 2 | head -n 1
-          CURRENT_TAG=$(aws s3 ls --recursive s3://xebiafr-prod-contentful-extensions-bucket/seo | sort | tail -n 2 | head -n 1)
-          echo $CURRENT_TAG
-          NEXT_TAG=$((CURRENT_TAG + 1))
-          echo $NEXT_TAG
-          aws s3 sync seo/build s3://xebiafr-prod-contentful-extensions-bucket/seo/$NEXT_TAG
+          aws s3api list-objects --bucket xebiafr-prod-contentful-extensions-bucket --prefix seo --delimiter / --query "Contents[?!contains(Key, `.`)].{Key : Key}"
 
 
 workflows:
