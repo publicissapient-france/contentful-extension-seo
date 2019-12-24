@@ -77,6 +77,36 @@ jobs:
          command: |
           aws s3 sync seo/build s3://xebiafr-prod-contentful-extensions-bucket/master
 
+      - persist_to_workspace:
+          root: .
+          paths:
+            - seo/build
+
+"Tagging version of Seo extension":
+  executor: aws-cli/default
+
+  working_directory: /tmp
+
+  steps:
+    - attach_workspace:
+        at: .
+
+    - aws-cli/setup:
+        aws-region: AWS_DEFAULT_REGION
+
+    - run:
+       name: Create master repository if needed
+       command: |
+        if aws s3api head-object --bucket xebiafr-prod-contentful-extensions-bucket --key 1 2>/dev/null; then
+          echo "Directory already exists"
+        else
+          aws s3api put-object --bucket xebiafr-prod-contentful-extensions-bucket --key 1
+        fi
+
+    - run:
+       name: Deploy to production bucket
+       command: |
+        aws s3 sync seo/build s3://xebiafr-prod-contentful-extensions-bucket/1
 
 workflows:
   version: 2
@@ -86,7 +116,14 @@ workflows:
       - "Package Serverless - Seo extension":
           requires:
             - "Build - Seo extension"
-      - "Deploy - Seo  - Master":
+      - "Deploy - Seo extension - Master":
           context: "Contentful Extensions - AWS Deployment"
           requires:
             - "Package Serverless - Seo extension"
+      - "Tagging approval":
+              type: approval
+              requires:
+               - "Deploy - Seo extension - Master"
+      - "Tagging version of Seo extension":
+              requires:
+               - "Tagging approval"
