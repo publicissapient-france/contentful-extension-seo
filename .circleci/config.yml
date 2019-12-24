@@ -64,15 +64,6 @@ jobs:
           aws-region: AWS_DEFAULT_REGION
 
       - run:
-         name: Create master repository if needed
-         command: |
-          if aws s3api head-object --bucket xebiafr-prod-contentful-extensions-bucket --key seo/master 2>/dev/null; then
-            echo "Directory already exists"
-          else
-            aws s3api put-object --bucket xebiafr-prod-contentful-extensions-bucket --key seo/master
-          fi
-
-      - run:
          name: Deploy to production bucket
          command: |
           aws s3 sync seo/build s3://xebiafr-prod-contentful-extensions-bucket/seo/master
@@ -93,15 +84,6 @@ jobs:
 
       - aws-cli/setup:
           aws-region: AWS_DEFAULT_REGION
-
-      - run:
-         name: Create master repository if needed
-         command: |
-          if aws s3api head-object --bucket xebiafr-prod-contentful-extensions-bucket --key seo/1 2>/dev/null; then
-            echo "Directory already exists"
-          else
-            aws s3api put-object --bucket xebiafr-prod-contentful-extensions-bucket --key seo/1
-          fi
 
       - run:
          name: Deploy to production bucket
