@@ -86,7 +86,15 @@ jobs:
       - run:
          name: Deploy to production bucket
          command: |
-          aws s3api list-objects --bucket xebiafr-prod-contentful-extensions-bucket --prefix seo --delimiter / --query "Contents[?!contains(Key, `.`)].{Key : Key}"
+          s3api list-objects-v2 --bucket xebiafr-prod-contentful-extensions-bucket --prefix seo --query 'Contents[?contains(Key, `/`)].[Key]' --output text | sed -e 's/.*seo\/\(.*\)\/.*/\1/'
+          s3api list-objects-v2 --bucket xebiafr-prod-contentful-extensions-bucket --prefix seo --query 'Contents[?contains(Key, `/`)].[Key]' --output text | sed -e 's/.*seo\/\(.*\)\/.*/\1/' | uniq
+          s3api list-objects-v2 --bucket xebiafr-prod-contentful-extensions-bucket --prefix seo --query 'Contents[?contains(Key, `/`)].[Key]' --output text | sed -e 's/.*seo\/\(.*\)\/.*/\1/' | uniq | sort
+          s3api list-objects-v2 --bucket xebiafr-prod-contentful-extensions-bucket --prefix seo --query 'Contents[?contains(Key, `/`)].[Key]' --output text | sed -e 's/.*seo\/\(.*\)\/.*/\1/' | uniq | sort | tail -n 2 | head -n 1
+          CURRENT_TAG=$(s3api list-objects-v2 --bucket xebiafr-prod-contentful-extensions-bucket --prefix seo --query 'Contents[?contains(Key, `/`)].[Key]' --output text | sed -e 's/.*seo\/\(.*\)\/.*/\1/' | uniq | sort | tail -n 2 | head -n 1)
+          echo $CURRENT_TAG
+          NEXT_TAG=$((CURRENT_TAG + 1))
+          echo $NEXT_TAG
+          aws s3 sync seo/build s3://xebiafr-prod-contentful-extensions-bucket/seo/$NEXT_TAG
 
 
 workflows:
