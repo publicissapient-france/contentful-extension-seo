@@ -86,11 +86,11 @@ jobs:
       - run:
          name: Deploy to production bucket
          command: |
-          s3api list-objects-v2 --bucket xebiafr-prod-contentful-extensions-bucket --prefix seo --query 'Contents[?contains(Key, `/`)].[Key]' --output text | sed -e 's/.*seo\/\(.*\)\/.*/\1/'
-          s3api list-objects-v2 --bucket xebiafr-prod-contentful-extensions-bucket --prefix seo --query 'Contents[?contains(Key, `/`)].[Key]' --output text | sed -e 's/.*seo\/\(.*\)\/.*/\1/' | uniq
-          s3api list-objects-v2 --bucket xebiafr-prod-contentful-extensions-bucket --prefix seo --query 'Contents[?contains(Key, `/`)].[Key]' --output text | sed -e 's/.*seo\/\(.*\)\/.*/\1/' | uniq | sort
-          s3api list-objects-v2 --bucket xebiafr-prod-contentful-extensions-bucket --prefix seo --query 'Contents[?contains(Key, `/`)].[Key]' --output text | sed -e 's/.*seo\/\(.*\)\/.*/\1/' | uniq | sort | tail -n 2 | head -n 1
-          CURRENT_TAG=$(s3api list-objects-v2 --bucket xebiafr-prod-contentful-extensions-bucket --prefix seo --query 'Contents[?contains(Key, `/`)].[Key]' --output text | sed -e 's/.*seo\/\(.*\)\/.*/\1/' | uniq | sort | tail -n 2 | head -n 1)
+          aws s3api list-objects-v2 --bucket xebiafr-prod-contentful-extensions-bucket --prefix seo --query 'Contents[?contains(Key, `/`)].[Key]' --output text | sed -e 's/.*seo\/\(.*\)\/.*/\1/'
+          aws s3api list-objects-v2 --bucket xebiafr-prod-contentful-extensions-bucket --prefix seo --query 'Contents[?contains(Key, `/`)].[Key]' --output text | sed -e 's/.*seo\/\(.*\)\/.*/\1/' | uniq
+          aws s3api list-objects-v2 --bucket xebiafr-prod-contentful-extensions-bucket --prefix seo --query 'Contents[?contains(Key, `/`)].[Key]' --output text | sed -e 's/.*seo\/\(.*\)\/.*/\1/' | uniq | sort
+          aws s3api list-objects-v2 --bucket xebiafr-prod-contentful-extensions-bucket --prefix seo --query 'Contents[?contains(Key, `/`)].[Key]' --output text | sed -e 's/.*seo\/\(.*\)\/.*/\1/' | uniq | sort | tail -n 2 | head -n 1
+          CURRENT_TAG=$(aws s3api list-objects-v2 --bucket xebiafr-prod-contentful-extensions-bucket --prefix seo --query 'Contents[?contains(Key, `/`)].[Key]' --output text | sed -e 's/.*seo\/\(.*\)\/.*/\1/' | uniq | sort | tail -n 2 | head -n 1)
           echo $CURRENT_TAG
           NEXT_TAG=$((CURRENT_TAG + 1))
           echo $NEXT_TAG
