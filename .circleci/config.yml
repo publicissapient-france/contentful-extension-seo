@@ -86,11 +86,11 @@ jobs:
       - run:
          name: Deploy to production bucket
          command: |
-          aws s3 ls s3://xebiafr-prod-contentful-extensions-bucket/seo
-          aws s3 ls s3://xebiafr-prod-contentful-extensions-bucket/seo | sort
-          aws s3 ls s3://xebiafr-prod-contentful-extensions-bucket/seo | sort | tail -n 2
-          aws s3 ls s3://xebiafr-prod-contentful-extensions-bucket/seo | sort | tail -n 2 | head -n 1
-          CURRENT_TAG=$(aws s3 ls s3://xebiafr-prod-contentful-extensions-bucket/seo | sort | tail -n 2 | head -n 1)
+          aws s3 ls --recursive s3://xebiafr-prod-contentful-extensions-bucket/seo
+          aws s3 ls --recursive s3://xebiafr-prod-contentful-extensions-bucket/seo | sort
+          aws s3 ls --recursive s3://xebiafr-prod-contentful-extensions-bucket/seo | sort | tail -n 2
+          aws s3 ls --recursive s3://xebiafr-prod-contentful-extensions-bucket/seo | sort | tail -n 2 | head -n 1
+          CURRENT_TAG=$(aws s3 ls --recursive s3://xebiafr-prod-contentful-extensions-bucket/seo | sort | tail -n 2 | head -n 1)
           echo $CURRENT_TAG
           NEXT_TAG=$((CURRENT_TAG + 1))
           echo $NEXT_TAG
