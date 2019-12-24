@@ -1,4 +1,6 @@
-version: 2
+version: 2.1
+orbs:
+  aws-cli: circleci/aws-cli@0.1.19
 
 jobs:
   "Build - Seo extension":
@@ -49,18 +51,32 @@ jobs:
             - seo/package-prod
             - seo/serverless.yml
 
-  "Deploy - Seo extension":
-    docker:
-      # Image built from the Dockerfile in the current repository
-      - image: xebiafrance/contentful-extensions-build-container:v1
+  "Deploy - Seo extension - Master":
+    executor: aws-cli/default
+
+    working_directory: /tmp
+
     steps:
       - attach_workspace:
           at: .
+
+      - aws-cli/setup:
+          aws-region: AWS_DEFAULT_REGION
+
       - run:
-          name: Deploy to AWS S3
-          command: |
-            cd seo/
-            serverless deploy --force -p package-prod -s prod
+         name: Create master repository if needed
+         command: |
+          if aws s3api head-object --bucket xebiafr-prod-contentful-extensions-bucket --key master 2>/dev/null; then
+            echo "Directory already exists"
+          else
+            aws s3api put-object --bucket xebiafr-prod-contentful-extensions-bucket --key master
+          fi
+
+      - run:
+         name: Deploy to production bucket
+         command: |
+          aws s3 sync seo/build s3://xebiafr-prod-contentful-extensions-bucket/master
+
 
 workflows:
   version: 2
@@ -70,7 +86,7 @@ workflows:
       - "Package Serverless - Seo extension":
           requires:
             - "Build - Seo extension"
-      - "Deploy - Seo extension":
+      - "Deploy - Seo  - Master":
           context: "Contentful Extensions - AWS Deployment"
           requires:
             - "Package Serverless - Seo extension"
