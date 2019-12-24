@@ -72,6 +72,7 @@ jobs:
           root: .
           paths:
             - seo/build
+            - seo/package-prod
 
   "Tagging version of Seo extension":
     executor: aws-cli/default
@@ -85,10 +86,14 @@ jobs:
       - aws-cli/setup:
           aws-region: AWS_DEFAULT_REGION
 
+
       - run:
          name: Deploy to production bucket
          command: |
-          aws s3 sync seo/build s3://xebiafr-prod-contentful-extensions-bucket/seo/1
+          CURRENT_TAG=$(aws s3 ls s3://xebiafr-prod-contentful-extensions-bucket/seo | sort | tail -n 2 | head -n 1)
+          NEXT_TAG=$((CURRENT_TAG + 1))
+          aws s3 sync seo/build s3://xebiafr-prod-contentful-extensions-bucket/seo/${NEXT_TAG}
+
 
 workflows:
   version: 2
