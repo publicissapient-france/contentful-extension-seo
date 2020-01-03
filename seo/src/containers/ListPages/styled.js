@@ -15,6 +15,7 @@ export const Banner = styled.div`
   width : 100%;
   background : ${ extensionTheme.grey10 }; 
   padding-left : 10px;
+  margin-bottom : 10px;
   box-sizing : border-box;
   font-weight : 300;
   border-bottom : 1px solid ${ extensionTheme.grey20 }; 

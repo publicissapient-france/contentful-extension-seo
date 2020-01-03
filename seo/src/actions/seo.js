@@ -15,3 +15,17 @@ export const updateGlobal = (target, property, value) => ({
     property : property,
     value : value
 });
+
+export const initPage = (page) => ({
+    type: 'INIT_PAGE',
+    page : page
+});
+
+export const updatePage = (target, property, value, id, locale) => ({
+    type: 'UPDATE_PAGE_SEO',
+    target: target,
+    property : property,
+    value : value,
+    id : id,
+    locale : locale,
+});

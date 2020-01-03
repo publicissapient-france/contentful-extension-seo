@@ -3,9 +3,12 @@ import {extensionTheme} from "../../style/theme";
 
 export const Container = styled.div`
   border: 1px solid ${ extensionTheme.grey20 };
-  background : ${ extensionTheme.grey10 };
+  border-left : 5px solid ${extensionTheme.blueM}
+  background : white;
   margin-bottom : 10px;
-  width : 100%;
+  box-sizing : border-box;
+  margin-left : 10px;
+  margin-right : 10px;
   
  `;
 
@@ -13,7 +16,6 @@ export const Container = styled.div`
 export const Banner = styled.div`
   display : flex;
   width : 100%;
-  background : ${ extensionTheme.grey10 }; 
   padding-left : 10px;
   box-sizing : border-box;
   font-weight : 300;
@@ -28,30 +30,10 @@ export const Banner = styled.div`
     font-size:13px;
     font-weight : 700;
     opacity:0.7;
-    
-  }
-  
-  & p{
-    padding-left : 10px;
-    line-height : 15px;
-    align-self:center;
-    font-size:13px;
-    font-weight : 400;
-    opacity:0.7;
-  }
-  
- 
-  & input[type='checkbox']{
-    height : 34px;
+    margin: 0;
     padding : 0;
-    margin : 0;
     
-    &:checked{
-        background : ${ extensionTheme.blueM }; 
-    }
   }
   
-  &>div{
-    display : flex;
-  }
+  
 `;

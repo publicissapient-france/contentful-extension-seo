@@ -3,10 +3,10 @@ import {connect} from 'react-redux';
 
 import { Container, Title, Field, ChoiceItemsConfirm , Row, Column} from './styled'
 
-import ButtonBasic from '../../components/ui/ButtonBasic';
-import ButtonValidate from '../../components/ui/ButtonValidate';
+import ButtonBasic from '../../../components/ui/ButtonBasic/index';
+import ButtonValidate from '../../../components/ui/ButtonValidate/index';
 
-import { updateGlobal } from '../../actions'
+import { updateGlobal } from '../../../actions/index'
 
 class GoogleTagManager extends Component {
     constructor(props) {

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {Container, Banner} from "./styled";
 import update from 'react-addons-update';
-import OGP from '../../fields/OGP';
-import GoogleTagManager from '../../fields/GoogleTagManager';
+import OGP from '../../fields/global/OGP';
+import GoogleTagManager from '../../fields/global/GoogleTagManager';
 
 
 class GlobalSEO extends Component {

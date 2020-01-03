@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { extensionTheme} from "../../style/theme";
+import { extensionTheme} from "../../../style/theme";
 
 export const Container = styled.div`
   padding : 10px;
