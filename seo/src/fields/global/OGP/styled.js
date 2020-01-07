@@ -7,20 +7,6 @@ export const Container = styled.div`
 `;
 
 
-export const ChoiceItemsConfirm = styled.div`
- display : flex;
-    align-items : flex-end;
-    justify-content : flex-end;
-    
-    & button:not(:first-child){
-        margin-left : 10px;
-    }
-    padding : 10px 15px 10px 20px;
-    width : 100%;
-    border-top : 1px solid ${ extensionTheme.grey20 };
-    box-sizing : border-box;
-`;
-
 
 export const Field = styled.div`
   display : flex;

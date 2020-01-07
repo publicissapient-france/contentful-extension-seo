@@ -6,6 +6,7 @@ import isEqual from 'lodash/isEqual';
 import {initSEO, initExtensionInformation, initPage, getCurrentSEO, initVisibility} from '../actions';
 import GlobalSEO from './GlobalSEO'
 import ListPages from './ListPages'
+import { extractAssetUrl } from '../utils/functions'
 
 class App extends React.Component {
     constructor(props) {
@@ -70,10 +71,11 @@ class App extends React.Component {
     setFieldValue = () => {
         this.props.extension.field.removeValue().then(() => {
             const seo = this.props.store.getState().seo;
-            console.log('seo', seo)
+            const staticResources = extractAssetUrl(seo);
 
             this.props.extension.field.setValue({
                 value: JSON.stringify(seo),
+                staticResources : staticResources.length !== 0 ? staticResources : ['no-static-resources']
             }).then(() => {
                 console.log('NEW SEO VALUE', this.props.extension.field.getValue())
             });

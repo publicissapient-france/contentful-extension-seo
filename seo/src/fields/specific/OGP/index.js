@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import { Container, Title, Field,Banner, Fields , ChoiceItemsConfirm } from './styled'
+import { Container, Title, Field,Banner, Fields } from './styled'
 import LanguageToggle from '../../../containers/LanguageToggle'
 import SvgContent from '../../../components/svg/SvgContent';
 import { Icon } from '../../../style/styledComponents'
+import ImageUploader from '../../../components/ImageUploader'
 
 import {getCurrentLanguage, updatePage} from "../../../actions";
 
@@ -24,16 +25,17 @@ class OGP extends Component {
     }
 
     toggleOpenFields = () => {
-        console.log('TOGGLE OPEN FIELDS')
         this.setState(prevState => ({
             openFields: !prevState.openFields,
         }));
     }
 
+    updateImage = (url) => {
+        this.props.dispatch(updatePage('OGP', 'image',url, this.props.idPage, this.props.selectedLanguage))
+    }
+
     render() {
         const { dispatch, storeValue, idPage, selectedLanguage } = this.props;
-
-        console.log('storevalue on specific OGP', storeValue);
         return (
             <Container>
                 <Banner>
@@ -85,25 +87,9 @@ class OGP extends Component {
                     </Field>
                     <Field>
                         <label>og:image</label>
-                        <input type={'text'}
-                               value={storeValue && storeValue.image && storeValue.image[selectedLanguage] ? storeValue.image[selectedLanguage] : ''}
-                               onChange={e => {
-                                   dispatch(updatePage('OGP', 'image', e.target.value, idPage, selectedLanguage))
-                               }}/>
+                        <ImageUploader image={storeValue && storeValue.image && storeValue.image[selectedLanguage] ? storeValue.image[selectedLanguage] : null} updateImage={this.updateImage} />
                     </Field>
                 </Fields>
-
-
-                {
-
-                    /*<ChoiceItemsConfirm className={''}>
-                        <ButtonBasic label={'Cancel'} disabled={false}/>
-                        <ButtonValidate label={'Update'} disabled={false} action={() => {
-                            console.log('click on validate')
-                        }}/>
-                    </ChoiceItemsConfirm>*/
-                }
-
 
             </Container>
         );

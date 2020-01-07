@@ -27,7 +27,7 @@ class ListPages extends Component {
                 {
                     pages ?
                         Object.keys(pages).map( (key, index) => {
-                            return <PageSEO page={pages[key]} id={key}  />
+                            return <PageSEO key={key} page={pages[key]} id={key}  />
                         })
                         : null
                 }

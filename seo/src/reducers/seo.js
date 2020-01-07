@@ -9,9 +9,7 @@ const seo = (state = [], action) => {
             return action.state;
 
         case 'UPDATE_GLOBAL_SEO' :
-            console.log('UPDATE_GLOBAL_SEO state', state);
             if (!state.global[action.target]) {
-                console.log('target not exist')
                 const targetValue = {
                     [action.property]: action.value
                 }

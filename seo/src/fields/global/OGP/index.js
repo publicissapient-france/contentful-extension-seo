@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import { Container, Title, Field, ChoiceItemsConfirm } from './styled'
-
-import ButtonBasic from '../../../components/ui/ButtonBasic/index';
-import ButtonValidate from '../../../components/ui/ButtonValidate/index';
+import { Container, Title, Field } from './styled'
 
 import { updateGlobal } from '../../../actions/index'
 
@@ -37,16 +34,6 @@ class OGP extends Component {
                            }}/>
 
                 </Field>
-                {
-
-                    /*<ChoiceItemsConfirm className={''}>
-                        <ButtonBasic label={'Cancel'} disabled={false}/>
-                        <ButtonValidate label={'Update'} disabled={false} action={() => {
-                            console.log('click on validate')
-                        }}/>
-                    </ChoiceItemsConfirm>*/
-                }
-
 
             </Container>
         );

@@ -20,13 +20,11 @@ class PageSEO extends Component {
     render () {
         const { dispatch ,page , locales, id } = this.props;
 
-        console.log('Page on Page Seo container' ,page)
-        console.log('Page on Page Seo locales' ,locales)
         return (
             <Container>
                 <Banner>
-                    <h4>{ page.slug[locales.default]}</h4>
-                    <h4>{ id}</h4>
+                    <h4>{ page.slug[Object.keys( page.slug)[0]] }</h4>
+                    <h4>{id}</h4>
                 </Banner>
                 <div>
                    <Base idPage={id}/>

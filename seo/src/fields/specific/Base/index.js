@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import { Container, Title, Field,Banner, Fields , ChoiceItemsConfirm } from './styled'
+import { Container, Title, Field,Banner, Fields } from './styled'
 import LanguageToggle from '../../../containers/LanguageToggle'
 import SvgContent from '../../../components/svg/SvgContent';
 import { Icon } from '../../../style/styledComponents'
@@ -24,7 +24,6 @@ class Base extends Component {
     }
 
     toggleOpenFields = () => {
-        console.log('TOGGLE OPEN FIELDS')
         this.setState(prevState => ({
             openFields: !prevState.openFields,
         }));
@@ -32,8 +31,6 @@ class Base extends Component {
 
     render() {
         const { dispatch, storeValue, idPage, selectedLanguage } = this.props;
-
-        console.log('storevalue on specific OGP', storeValue);
         return (
             <Container>
                 <Banner>
@@ -67,19 +64,6 @@ class Base extends Component {
 
                     </Field>
                 </Fields>
-
-
-                {
-
-                    /*<ChoiceItemsConfirm className={''}>
-                        <ButtonBasic label={'Cancel'} disabled={false}/>
-                        <ButtonValidate label={'Update'} disabled={false} action={() => {
-                            console.log('click on validate')
-                        }}/>
-                    </ChoiceItemsConfirm>*/
-                }
-
-
             </Container>
         );
     }
