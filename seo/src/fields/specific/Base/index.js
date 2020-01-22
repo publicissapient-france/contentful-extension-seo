@@ -30,7 +30,7 @@ class Base extends Component {
     }
 
     render() {
-        const { dispatch, storeValue, idPage, selectedLanguage } = this.props;
+        const { dispatch, storeValue, index, selectedLanguage } = this.props;
         return (
             <Container>
                 <Banner>
@@ -50,7 +50,7 @@ class Base extends Component {
                         <input type={'text'}
                                value={storeValue && storeValue.title && storeValue.title[selectedLanguage] ? storeValue.title[selectedLanguage] : ''}
                                onChange={e => {
-                                   dispatch(updatePage('Base', 'title', e.target.value, idPage, selectedLanguage))
+                                   dispatch(updatePage('Base', 'title', e.target.value, index, selectedLanguage))
                                }}/>
 
                     </Field>
@@ -59,7 +59,7 @@ class Base extends Component {
                         <input type={'text'}
                                value={storeValue && storeValue.description && storeValue.description[selectedLanguage] ? storeValue.description[selectedLanguage] : ''}
                                onChange={e => {
-                                   dispatch(updatePage('Base', 'description', e.target.value, idPage, selectedLanguage))
+                                   dispatch(updatePage('Base', 'description', e.target.value, index, selectedLanguage))
                                }}/>
 
                     </Field>
@@ -70,7 +70,7 @@ class Base extends Component {
 }
 
 const mapStateToProps = ( state, ownProps) => ({
-    storeValue : state.seo.pages[ownProps.idPage]['Base'] || null,
+    storeValue : state.seo.pages[ownProps.index]['Base'] || null,
     selectedLanguage: state.visibility.selectedLanguage
 });
 

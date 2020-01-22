@@ -3,7 +3,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Extension, MainContainer} from '../style/styledComponents';
 import isEqual from 'lodash/isEqual';
-import {initSEO, initExtensionInformation, initPage, getCurrentSEO, initVisibility} from '../actions';
+import {initSEO, initExtensionInformation, initPage, getCurrentSEO, initVisibility, removeDeletedPages} from '../actions';
 import GlobalSEO from './GlobalSEO'
 import ListPages from './ListPages'
 import { extractAssetUrl } from '../utils/functions'
@@ -43,7 +43,10 @@ class App extends React.Component {
         );
 
         this.props.extension.window.startAutoResizer();
-        await this.getPagesOfSpace();
+        const pagesOfSpace = await this.getPagesOfSpace();
+        this.props.dispatch(removeDeletedPages(pagesOfSpace))
+        pagesOfSpace.map( page => this.props.dispatch(initPage(page)));
+        this.props.dispatch(removeDeletedPages(pagesOfSpace))
 
     }
 
@@ -110,7 +113,7 @@ class App extends React.Component {
             .then(result => {
                 let pages = result.items.map(entry => entry)
                     .filter(page => page.fields.type[this.props.extension.locales.default] === 'internal')
-                    .map( page => this.props.dispatch(initPage(page)))
+                   // .map( page => this.props.dispatch(initPage(page)))
                 return pages;
             });
     }
@@ -138,7 +141,7 @@ class App extends React.Component {
             <Extension>
                 <MainContainer className={'container'}>
                     {this.renderGlobalSEO()}
-                    {this.renderPagesSEO()}
+                    <ListPages/>
                 </MainContainer>
             </Extension>
         );
@@ -151,12 +154,7 @@ class App extends React.Component {
             </section>
         );
     }
-    renderPagesSEO = () => {
-        console.log('THIS PROPS SEO', this.props.seo)
-        return (
-            <ListPages pages={this.props.seo.pages}/>
-        );
-    }
+
 }
 
 const mapStateToProps = ({ seo }) => ({

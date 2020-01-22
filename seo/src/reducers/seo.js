@@ -32,69 +32,71 @@ const seo = (state = [], action) => {
             }
 
         case 'INIT_PAGE' :
-            if (!state.pages[action.page.sys.id]) {
-                console.log('ADD PAGE', action.page.sys.id)
+            if (state.pages && !state.pages.find(page => page.id === action.page.sys.id)) {
                 const newPage = {
+                    id: action.page.sys.id,
                     name: action.page.fields.name,
                     slug: action.page.fields.slug
                 };
                 return update(state, {
                     pages: {
-                        $merge: {
-                            [action.page.sys.id]: newPage
-                        }
-
+                        $push: [
+                            newPage
+                        ]
                     }
                 });
-            } else {
-                console.log('PAGE EXIST', action.page.sys.id);
+            }
+
+        case 'REMOVE_DELETED_PAGES' :
+            if (action.pages) {
+                let ids = action.pages.map(page => page.sys.id);
+                let pages = [...state.pages];
+                const result = pages.filter( page => ids.find(id => id === page.id))
+                return update(state, {
+                    pages: {
+                        $set: result
+                    }
+                });
             }
 
         case 'UPDATE_PAGE_SEO' :
-            console.log('UPDATE_PAGE_SEO state', state);
-            console.log('UPDATE_PAGE_SEO', action)
-
-
-            if (state.pages[action.id] && !state.pages[action.id][action.target]) {
-                console.log('target not exist')
+            if (state.pages[action.index] && !state.pages[action.index][action.target]) {
                 const newValue = {
                     [action.property]: {
                         [action.locale]: action.value
                     }
                 }
-                console.log('new targetValue', newValue)
                 return update(state, {
                     pages: {
-                        [action.id]: {
+                        [action.index]: {
                             $merge: {
                                 [action.target]: newValue
                             }
                         }
-
                     }
                 });
-            } else if (state.pages[action.id]
-                && state.pages[action.id][action.target]
-                && !state.pages[action.id][action.target][action.property]) {
+            } else if (state.pages[action.index]
+                && state.pages[action.index][action.target]
+                && !state.pages[action.index][action.target][action.property]) {
                 const newValue = {
                     [action.locale]: action.value
                 }
 
                 return update(state, {
                     pages: {
-                        [action.id]: {
+                        [action.index]: {
                             [action.target]: {
-                                [action.property]:  {$set: newValue}
+                                [action.property]: {$set: newValue}
                             }
                         }
                     }
                 });
-            }else if(state.pages[action.id]
-                && state.pages[action.id][action.target]
-                && state.pages[action.id][action.target][action.property]){
+            } else if (state.pages[action.index]
+                && state.pages[action.index][action.target]
+                && state.pages[action.index][action.target][action.property]) {
                 return update(state, {
                     pages: {
-                        [action.id]: {
+                        [action.index]: {
                             [action.target]: {
                                 [action.property]: {
                                     [action.locale]: {$set: action.value}
@@ -104,39 +106,6 @@ const seo = (state = [], action) => {
                     }
                 });
             }
-
-        /*if (!state.pages[action.id][action.target]) {
-            console.log('target not exist')
-            const targetValue = {
-                [action.property]: {
-                    [action.locale]: action.value
-                }
-            }
-            return update(state, {
-                pages: {
-                    [action.id]: {
-                        $merge: {
-                            [action.target]: targetValue
-                        }
-                    }
-
-                }
-            });
-
-        } else {
-            return update(state, {
-                pages: {
-                    [action.id]: {
-                        [action.target]: {
-                            [action.property]: {
-                                [action.locale]: {$set: action.value}
-                            }
-
-                        }
-                    }
-                }
-            });
-        }*/
 
         default:
             return state;

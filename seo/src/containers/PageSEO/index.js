@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {Container, Banner} from "./styled";
-import update from 'react-addons-update';
 import OGP from '../../fields/specific/OGP';
 import Base from '../../fields/specific/Base';
 
@@ -18,17 +17,17 @@ class PageSEO extends Component {
 
 
     render () {
-        const { dispatch ,page , locales, id } = this.props;
+        const { page , index } = this.props;
 
         return (
             <Container>
                 <Banner>
                     <h4>{ page.slug[Object.keys( page.slug)[0]] }</h4>
-                    <h4>{id}</h4>
+                    <h4>{index}</h4>
                 </Banner>
                 <div>
-                   <Base idPage={id}/>
-                   <OGP idPage={id}/>
+                   <Base index={index}/>
+                   <OGP index={index}/>
                 </div>
 
             </Container>

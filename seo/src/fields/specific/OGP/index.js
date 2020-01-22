@@ -31,11 +31,11 @@ class OGP extends Component {
     }
 
     updateImage = (url) => {
-        this.props.dispatch(updatePage('OGP', 'image',url, this.props.idPage, this.props.selectedLanguage))
+        this.props.dispatch(updatePage('OGP', 'image',url, this.props.index, this.props.selectedLanguage))
     }
 
     render() {
-        const { dispatch, storeValue, idPage, selectedLanguage } = this.props;
+        const { dispatch, storeValue, index, selectedLanguage } = this.props;
         return (
             <Container>
                 <Banner>
@@ -55,7 +55,7 @@ class OGP extends Component {
                         <input type={'text'}
                                value={storeValue && storeValue.title && storeValue.title[selectedLanguage] ? storeValue.title[selectedLanguage] : ''}
                                onChange={e => {
-                                   dispatch(updatePage('OGP', 'title', e.target.value, idPage, selectedLanguage))
+                                   dispatch(updatePage('OGP', 'title', e.target.value, index, selectedLanguage))
                                }}/>
 
                     </Field>
@@ -64,7 +64,7 @@ class OGP extends Component {
                         <input type={'text'}
                                value={storeValue && storeValue.description && storeValue.description[selectedLanguage] ? storeValue.description[selectedLanguage] : ''}
                                onChange={e => {
-                                   dispatch(updatePage('OGP', 'description', e.target.value, idPage, selectedLanguage))
+                                   dispatch(updatePage('OGP', 'description', e.target.value, index, selectedLanguage))
                                }}/>
 
                     </Field>
@@ -73,7 +73,7 @@ class OGP extends Component {
                         <input type={'text'}
                                value={storeValue && storeValue.type && storeValue.type[selectedLanguage] ? storeValue.type[selectedLanguage] : ''}
                                onChange={e => {
-                                   dispatch(updatePage('OGP', 'type', e.target.value, idPage, selectedLanguage))
+                                   dispatch(updatePage('OGP', 'type', e.target.value, index, selectedLanguage))
                                }}/>
 
                     </Field>
@@ -82,7 +82,7 @@ class OGP extends Component {
                         <input type={'text'}
                                value={storeValue && storeValue.url && storeValue.url[selectedLanguage] ? storeValue.url[selectedLanguage] : ''}
                                onChange={e => {
-                                   dispatch(updatePage('OGP', 'url', e.target.value, idPage, selectedLanguage))
+                                   dispatch(updatePage('OGP', 'url', e.target.value, index, selectedLanguage))
                                }}/>
                     </Field>
                     <Field>
@@ -97,7 +97,7 @@ class OGP extends Component {
 }
 
 const mapStateToProps = ( state, ownProps) => ({
-    storeValue : state.seo.pages[ownProps.idPage]['OGP'] || null,
+    storeValue : state.seo.pages[ownProps.index]['OGP'] || null,
     selectedLanguage: state.visibility.selectedLanguage
 });
 

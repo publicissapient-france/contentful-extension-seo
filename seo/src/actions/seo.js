@@ -21,11 +21,16 @@ export const initPage = (page) => ({
     page : page
 });
 
-export const updatePage = (target, property, value, id, locale) => ({
+export const updatePage = (target, property, value, index, locale) => ({
     type: 'UPDATE_PAGE_SEO',
     target: target,
     property : property,
     value : value,
-    id : id,
+    index : index,
     locale : locale,
+});
+
+export const removeDeletedPages = (pages) => ({
+    type: 'REMOVE_DELETED_PAGES',
+    pages : pages
 });

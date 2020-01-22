@@ -16,9 +16,7 @@ const initialState = {
         global : {
 
         },
-        pages : {
-
-        }
+        pages : []
     }
 };
 

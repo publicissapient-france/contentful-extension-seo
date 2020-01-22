@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {Container, Banner} from "./styled";
-import update from 'react-addons-update';
 import PageSEO from '../PageSEO'
 
 
@@ -17,7 +16,7 @@ class ListPages extends Component {
 
 
     render () {
-        const { dispatch, pages } = this.props;
+        const { pages } = this.props;
 
         return (
             <Container>
@@ -26,8 +25,8 @@ class ListPages extends Component {
                 </Banner>
                 {
                     pages ?
-                        Object.keys(pages).map( (key, index) => {
-                            return <PageSEO key={key} page={pages[key]} id={key}  />
+                        pages.map( (page, index) => {
+                            return <PageSEO key={index} page={page} index={index}  />
                         })
                         : null
                 }
@@ -40,4 +39,7 @@ class ListPages extends Component {
 ListPages.propTypes = {
 };
 
-export default connect()(ListPages);
+const mapStateToProps = ({ seo }) => ({
+    pages: seo.pages,
+});
+export default connect(mapStateToProps)(ListPages);
