@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 import { extensionTheme} from "../../../style/theme";
 
-export const Container = styled.div`
- 
+export const Container = styled.div` 
   background : ${extensionTheme.white};
 `;
-
 
 export const Field = styled.div`
   display : flex;
@@ -38,12 +36,7 @@ export const Field = styled.div`
     margin-top : 10px;
     font-size : 12px;
     font-weight : 300;
-    color :  ${ extensionTheme.grey80 };
-    
-   
-    
-    
-    
+    color :  ${ extensionTheme.grey80 }; 
   }
   
   span {
@@ -63,7 +56,6 @@ export const Fields = styled.div`
   border-bottom : 1px solid ${ extensionTheme.grey20 };
 `;
 
-
 export const Title = styled.p`
     line-height : 15px;
     padding-bottom : 5px;
@@ -72,7 +64,6 @@ export const Title = styled.p`
     font-weight : 400;
     opacity:0.7;
 `;
-
 
 export const Banner = styled.div`
   display : flex;
@@ -100,6 +91,4 @@ export const Banner = styled.div`
   &>div{
     display : flex;
   }  
-  
-  
 `;

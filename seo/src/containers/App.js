@@ -3,7 +3,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Extension, MainContainer} from '../style/styledComponents';
 import isEqual from 'lodash/isEqual';
-import {initSEO, initExtensionInformation, initPage, getCurrentSEO, initVisibility, removeDeletedPages} from '../actions';
+import {initSEO, initExtensionInformation, initPage, initVisibility, removeDeletedPages} from '../actions';
 import GlobalSEO from './GlobalSEO'
 import ListPages from './ListPages'
 import { extractAssetUrl } from '../utils/functions'
@@ -23,11 +23,9 @@ class App extends React.Component {
 
     componentDidMount = async () => {
         if (this.props.extension.field && this.props.extension.field.getValue()) {
-            console.log('SEO VALUE ON MOUNT', this.props.extension.field.getValue())
             this.props.dispatch(initSEO(JSON.parse(this.props.extension.field.getValue().value)));
             this.props.dispatch(initExtensionInformation(this.props.extension));
             this.props.dispatch(initVisibility(this.props.extension.locales.default));
-
         }
 
         this.detachFns = [];
@@ -43,8 +41,8 @@ class App extends React.Component {
         );
 
         this.props.extension.window.startAutoResizer();
+
         const pagesOfSpace = await this.getPagesOfSpace();
-        this.props.dispatch(removeDeletedPages(pagesOfSpace))
         pagesOfSpace.map( page => this.props.dispatch(initPage(page)));
         this.props.dispatch(removeDeletedPages(pagesOfSpace))
 
@@ -52,7 +50,6 @@ class App extends React.Component {
 
     componentDidUpdate = prevProps => {
         if (!isEqual(prevProps.seo, this.props.seo)) {
-
             if (!this.props.extension.field.getValue()) {
                 this.setFieldValue();
             }
@@ -62,7 +59,6 @@ class App extends React.Component {
                 !isEqual(this.props.seo, JSON.parse(this.props.extension.field.getValue().value))) {
                 this.setFieldValue();
             }
-
         }
     }
 
@@ -113,12 +109,9 @@ class App extends React.Component {
             .then(result => {
                 let pages = result.items.map(entry => entry)
                     .filter(page => page.fields.type[this.props.extension.locales.default] === 'internal')
-                   // .map( page => this.props.dispatch(initPage(page)))
                 return pages;
             });
     }
-
-
 
     onError = error => {
         this.props.extension.notifier.error(error.message);
@@ -140,21 +133,12 @@ class App extends React.Component {
         return (
             <Extension>
                 <MainContainer className={'container'}>
-                    {this.renderGlobalSEO()}
+                    <GlobalSEO/>
                     <ListPages/>
                 </MainContainer>
             </Extension>
         );
     }
-
-    renderGlobalSEO = () => {
-        return (
-            <section>
-                <GlobalSEO/>
-            </section>
-        );
-    }
-
 }
 
 const mapStateToProps = ({ seo }) => ({

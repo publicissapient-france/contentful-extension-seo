@@ -7,8 +7,6 @@ export const Extension = styled.div`
     p {
         margin : 0;
     }
-    
-    
 `;
 export const MainContainer = styled.div`
     border-radius : 2px;
@@ -23,7 +21,6 @@ export const MainContainer = styled.div`
     font-family :${ contentfulTheme.basicFont };
     font-size : 14px;
     font-weight : 400;
-
     
     h2{
        font-weight : 300; 
@@ -75,12 +72,7 @@ export const MainContainer = styled.div`
             border-image-source :url("https://static.contentful.com/app/svg/dotted-border.svg");
             border-image-repeat : round;
             border-image-slice : 1.1; 
-            
-            
         } 
-        
-        
-      
     }
     
     label{
@@ -89,7 +81,6 @@ export const MainContainer = styled.div`
         font-weight : 200;
         color : ${ extensionTheme.grey40 };
         font-family :${ contentfulTheme.basicFont };
-
     }
     
     section{
@@ -151,72 +142,8 @@ export const MainContainer = styled.div`
        font-size : 14px;
        color : ${ contentfulTheme.black };
     }
-       
-    
-    
 `;
 
-export const Container = styled.div`
-  border: 1px solid ${ extensionTheme.grey30 };
-  border-left : 5px solid ${ extensionTheme.orange };
-  background : ${ extensionTheme.grey10 };
-  margin-bottom : 10px;
-  width : 100%;
-  
-  box-sizing : border-box;
-
-  
-  h3, h4{
-    font-size : 13px;
-    width : fit-content;
-    padding : 0 0 0 10px;
-    margin : 0;
-    line-height : 40px;
-
-  }
-  h3{
-    font-weight : 400;
-   }
-   h4{
-    color :  ${ extensionTheme.grey };
-    font-weight : 300;
-   }
-  
-  .hidden{
-    display : none;
-  }
-`;
-
-export const Form = styled.form`
-  display : flex;
-  width : 100%;
-  justify-content: space-between;
-  padding : 15px 0;
-  box-sizing : border-box;
-  
-  button:not(:first-child){
-    margin-left : 10px;
-  }
-  
-  &>div{
-    display: flex;
-    flex-direction : column;
-    
-    &.buttons{
-        flex-direction : row;
-       align-items : flex-end;
-    }
-    
-  }
-`;
-
-export const OptionsBlock = styled.div`
-  display : flex;
-  flex-direction : column;
-  width : 100%;
-  height : fit-content;
-
-`;
 
 export const Icon = styled.div`
   width : 40px;
@@ -275,48 +202,5 @@ export const Icon = styled.div`
     }
   }
   
-`;
-
-export const Range = styled.div`
-  display : flex;
-  flex-direction : column;
-  width : 40px;
-  
-  & ${ Icon }{
-    height : 20px;
-    
-    &:nth-child(2){
-        transform:rotate(180deg);
-    }
-  }
-`;
-
-export const SafeDelete = styled.div`
-  display : flex;
-  justify-content : space-between;
-  width : 100%;
-  background: ${ extensionTheme.redXS };  
-  color: ${ extensionTheme.redM };  
-  padding-left : 8px; 
-  padding-top : 15px;
-  padding-bottom : 15px;
-  align-items : center;
-  
-  & div.buttons{
-    margin-left : 10px;
-    min-width : 150px;
-  }
-`;
-
-export const Error = styled.div`
-  
-  & h2{
-    color : ${ extensionTheme.redM };
-    font-weight : 700;
-    font-size : 16px;
-  } 
-  & p{
-    color : ${ extensionTheme.redM };
-  }
 `;
 

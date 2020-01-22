@@ -6,9 +6,7 @@ export const Container = styled.div`
   background : ${ extensionTheme.grey10 };
   margin-bottom : 10px;
   width : 100%;
-  
  `;
-
 
 export const Banner = styled.div`
   display : flex;
@@ -40,7 +38,6 @@ export const Banner = styled.div`
     opacity:0.7;
   }
   
- 
   & input[type='checkbox']{
     height : 34px;
     padding : 0;

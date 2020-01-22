@@ -5,9 +5,6 @@ const seo = (state = [], action) => {
         case 'INIT_SEO' :
             return action.seo;
 
-        case 'GET_SEO' :
-            return action.state;
-
         case 'UPDATE_GLOBAL_SEO' :
             if (!state.global[action.target]) {
                 const targetValue = {

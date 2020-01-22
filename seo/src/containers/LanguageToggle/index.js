@@ -28,7 +28,8 @@ class LanguageToggle extends Component {
 };
 
 LanguageToggle.propTypes = {
-    hidden: PropTypes.bool
+    hidden: PropTypes.bool,
+    selectedLanguage: PropTypes.string
 };
 
 const mapStateToProps = state => ({

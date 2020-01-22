@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { extensionTheme} from "../../../style/theme";
 
 export const Container = styled.div`
- 
   background : ${extensionTheme.white};
 `;
 
@@ -29,9 +28,9 @@ export const Field = styled.div`
   
   select {
     &.updated{
-            background : ${ extensionTheme.blueM };
-            color : ${ extensionTheme.white }
-        }
+       background : ${ extensionTheme.blueM };
+       color : ${ extensionTheme.white }
+    }
   }
   
   label {
@@ -39,7 +38,6 @@ export const Field = styled.div`
     font-weight : 300;
     color :  ${ extensionTheme.grey80 };
      margin-top : 10px;
-   
   }
   
   span {
@@ -60,7 +58,6 @@ export const Fields = styled.div`
 
 `;
 
-
 export const Title = styled.p`
     line-height : 15px;
     padding-bottom : 5px;
@@ -69,7 +66,6 @@ export const Title = styled.p`
     font-weight : 400;
     opacity:0.7;
 `;
-
 
 export const Banner = styled.div`
   display : flex;
@@ -97,6 +93,4 @@ export const Banner = styled.div`
   &>div{
     display : flex;
   }  
-  
-  
 `;

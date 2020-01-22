@@ -7,20 +7,8 @@ export const Container = styled.div`
    flex-direction : column;
    padding-left : 20px;
    padding-top : 20px;
-   
 `;
-export const Field = styled.div`
-   margin-bottom : 20px;   
-   
-   & label{
-    font-size : 14px;
-   }
-   
-   & input{
-    padding-left : 0px;
-    width : 120px;
-   }
-`;
+
 export const UploadView = styled.div`
   display : flex;
 `;
@@ -42,7 +30,7 @@ export const ViewPort = styled.div`
     fill : ${ extensionTheme.grey30 };
    }
   } 
- `;
+`;
 
 export const IconContainer = styled.div`
  width : 20px;
@@ -90,10 +78,7 @@ export const IconContainer = styled.div`
             }
          }
     }
- 
-    
  }
- 
 `;
 
 export const Actions = styled.nav`
@@ -101,13 +86,11 @@ export const Actions = styled.nav`
     flex-direction : column;
     justify-content : space-between; 
     padding : 0 10px;
-    
 `;
 
 export const Preview = styled.header`
    width : 120px;
    height : 120px;
    background-size : contain;
-   background-repeat : no-repeat;
-   
+   background-repeat : no-repeat;  
 `;

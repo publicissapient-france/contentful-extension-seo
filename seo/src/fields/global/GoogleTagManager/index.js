@@ -1,27 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-
+import PropTypes from 'prop-types';
 import { Container, Title, Field , Row, Column} from './styled'
-
-
 import { updateGlobal } from '../../../actions/index'
 
 class GoogleTagManager extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {};
-    }
-
-    componentDidMount(){
-
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-
-    }
-
-
     render() {
         const { dispatch, storeValue } = this.props;
 
@@ -47,14 +30,15 @@ class GoogleTagManager extends Component {
                                       }}/>
                         </Column>
                     </Row>
-
-
                 </Field>
-
             </Container>
         );
     }
 }
+
+GoogleTagManager.propTypes = {
+    storeValue : PropTypes.object
+};
 
 const mapStateToProps = ({ seo }) => ({
     storeValue : seo.global['GoogleTagManager'] || null

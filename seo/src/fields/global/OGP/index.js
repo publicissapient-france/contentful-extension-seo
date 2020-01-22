@@ -1,25 +1,11 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-
 import { Container, Title, Field } from './styled'
-
 import { updateGlobal } from '../../../actions/index'
 
 class OGP extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {};
-    }
-
-    componentDidMount(){}
-
-    componentDidUpdate(prevProps, prevState) {
-
-    }
-
-
-    render() {
+   render() {
         const { dispatch, storeValue } = this.props;
 
         return (
@@ -32,13 +18,15 @@ class OGP extends Component {
                            onChange={e => {
                                dispatch(updateGlobal('OGP', 'namespace', e.target.value))
                            }}/>
-
                 </Field>
-
             </Container>
         );
     }
 }
+
+OGP.propTypes = {
+    storeValue : PropTypes.object
+};
 
 const mapStateToProps = ({ seo }) => ({
     storeValue : seo.global['OGP'] || null

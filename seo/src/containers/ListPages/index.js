@@ -4,24 +4,14 @@ import { connect } from 'react-redux';
 import {Container, Banner} from "./styled";
 import PageSEO from '../PageSEO'
 
-
 class ListPages extends Component {
-    constructor (props) {
-        super(props);
-
-        this.state = {
-
-        };
-    }
-
-
-    render () {
+     render () {
         const { pages } = this.props;
 
         return (
             <Container>
                 <Banner>
-                    <h4>Page SEO </h4>
+                    <h4>Pages SEO </h4>
                 </Banner>
                 {
                     pages ?
@@ -30,13 +20,13 @@ class ListPages extends Component {
                         })
                         : null
                 }
-
             </Container>
         );
     }
 }
 
 ListPages.propTypes = {
+    pages : PropTypes.array
 };
 
 const mapStateToProps = ({ seo }) => ({

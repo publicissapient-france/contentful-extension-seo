@@ -9,9 +9,7 @@ export const Container = styled.div`
   box-sizing : border-box;
   margin-left : 10px;
   margin-right : 10px;
-  
  `;
-
 
 export const Banner = styled.div`
   display : flex;
@@ -32,8 +30,5 @@ export const Banner = styled.div`
     opacity:0.7;
     margin: 0;
     padding : 0;
-    
   }
-  
-  
 `;

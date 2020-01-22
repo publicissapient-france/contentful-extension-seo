@@ -6,22 +6,13 @@ import SvgAttachement from '../svg/SvgAttachement'
 import SvgAddSmall from '../svg/SvgAddSmall'
 import SvgTrashSmall from '../svg/SvgTrashSmall'
 
-import { Container, Field, UploadView, ViewPort, IconContainer, Actions, Preview } from './styled';
+import { Container, UploadView, ViewPort, IconContainer, Actions, Preview } from './styled';
 
 class ImageUploader extends Component {
     constructor (props) {
         super(props);
 
-        this.state = {
-        };
-    }
-
-    componentDidMount () {
-
-    };
-
-    componentDidUpdate (prevProps) {
-
+        this.state = {};
     }
 
     onClickLinkExisting = async () => {
@@ -58,7 +49,6 @@ class ImageUploader extends Component {
                                 <label>empty</label>
                                 :  <Preview style={{ backgroundImage: `url(https:${ image })` }}/>
                         }
-
                     </ViewPort>
                     <Actions>
                         <div>

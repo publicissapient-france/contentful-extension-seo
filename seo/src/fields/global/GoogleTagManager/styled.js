@@ -6,21 +6,16 @@ export const Container = styled.div`
   background : ${extensionTheme.white};
 `;
 
-
 export const Row = styled.div`
   display : flex;
 `;
-
 
 export const Column = styled.div`
   display : flex;
   flex-direction : column;
   width : 50%;
   padding-right : 20px;
-  
 `;
-
-
 
 export const Field = styled.div`
   display : flex;
@@ -65,7 +60,6 @@ export const Field = styled.div`
     display: flex;
   }
 `;
-
 
 export const Title = styled.p`
     line-height : 15px;

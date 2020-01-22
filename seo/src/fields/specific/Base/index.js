@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-
+import {updatePage} from "../../../actions";
 import { Container, Title, Field,Banner, Fields } from './styled'
+import { Icon } from '../../../style/styledComponents'
 import LanguageToggle from '../../../containers/LanguageToggle'
 import SvgContent from '../../../components/svg/SvgContent';
-import { Icon } from '../../../style/styledComponents'
-
-import {getCurrentLanguage, updatePage} from "../../../actions";
 
 class Base extends Component {
     constructor(props) {
@@ -15,12 +14,6 @@ class Base extends Component {
         this.state = {
             openFields : false
         };
-    }
-
-    componentDidMount(){}
-
-    componentDidUpdate(prevProps, prevState) {
-
     }
 
     toggleOpenFields = () => {
@@ -52,7 +45,6 @@ class Base extends Component {
                                onChange={e => {
                                    dispatch(updatePage('Base', 'title', e.target.value, index, selectedLanguage))
                                }}/>
-
                     </Field>
                     <Field>
                         <label>{`<meta name="description"> content`}</label>
@@ -61,7 +53,6 @@ class Base extends Component {
                                onChange={e => {
                                    dispatch(updatePage('Base', 'description', e.target.value, index, selectedLanguage))
                                }}/>
-
                     </Field>
                 </Fields>
             </Container>
@@ -69,10 +60,15 @@ class Base extends Component {
     }
 }
 
+Base.propTypes = {
+    storeValue : PropTypes.object,
+    index : PropTypes.number,
+    selectedLanguage: PropTypes.string
+};
+
 const mapStateToProps = ( state, ownProps) => ({
     storeValue : state.seo.pages[ownProps.index]['Base'] || null,
     selectedLanguage: state.visibility.selectedLanguage
 });
-
 
 export default connect(mapStateToProps)(Base);
