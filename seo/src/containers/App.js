@@ -23,6 +23,7 @@ class App extends React.Component {
 
     componentDidMount = async () => {
         if (this.props.extension.field && this.props.extension.field.getValue()) {
+            console.log('before parse', this.props.extension.field.getValue().value);
             this.props.dispatch(initSEO(JSON.parse(this.props.extension.field.getValue().value)));
             this.props.dispatch(initExtensionInformation(this.props.extension));
             this.props.dispatch(initVisibility(this.props.extension.locales.default));

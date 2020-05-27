@@ -3,7 +3,21 @@ import update from 'react-addons-update';
 const seo = (state = [], action) => {
     switch (action.type) {
         case 'INIT_SEO' :
-            return action.seo;
+            if(!Array.isArray(action.seo.pages)){
+                console.log('this is not an Array !!!!')
+                let arrayPage = [];
+                Object.keys(action.seo.pages).map((key, index) =>  {
+                    let page = action.seo.pages[key];
+                    page.id = key;
+                    arrayPage.push(page);
+                });
+
+                action.seo.pages = arrayPage;
+                return action.seo
+            }else{
+                return action.seo;
+            }
+
 
         case 'UPDATE_GLOBAL_SEO' :
             if (!state.global[action.target]) {
