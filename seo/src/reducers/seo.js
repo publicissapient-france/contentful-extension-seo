@@ -1,4 +1,5 @@
 import update from 'react-addons-update';
+import isEqual from 'lodash/isEqual'
 
 const seo = (state = [], action) => {
     switch (action.type) {
@@ -56,6 +57,18 @@ const seo = (state = [], action) => {
                         ]
                     }
                 });
+            }else if(state.pages && state.pages.find(page => page.id === action.page.sys.id)){
+                const pageOnStore = state.pages.find(page => page.id === action.page.sys.id);
+               if(!isEqual(pageOnStore.name, action.page.fields.name ) || !isEqual(pageOnStore.slug, action.page.fields.slug )){
+                   return update(state, {
+                       pages: {
+                           [state.pages.indexOf(pageOnStore)]: {
+                               name: { $set:  action.page.fields.name },
+                               slug: { $set: action.page.fields.slug }
+                           }
+                       }
+                   });
+               }
             }
 
         case 'REMOVE_DELETED_PAGES' :
