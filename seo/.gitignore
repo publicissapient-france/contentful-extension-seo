@@ -18,3 +18,5 @@ node_modules/
 # Build
 build/*
 !/build/index.html
+
+.contentfulrc.json
