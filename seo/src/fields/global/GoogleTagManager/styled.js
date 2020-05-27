@@ -37,17 +37,15 @@ export const Field = styled.div`
     }
   }
   
+  textarea{
+    min-height : 100px;
+  }
+  
   select {
     &.updated{
             background : ${ extensionTheme.blueM };
             color : ${ extensionTheme.white }
         }
-  }
-  
-  label {
-    font-size : 12px;
-    font-weight : 300;
-    color :  ${ extensionTheme.grey80 };
   }
   
   span {

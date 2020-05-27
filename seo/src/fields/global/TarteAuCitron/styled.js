@@ -37,6 +37,10 @@ export const Field = styled.div`
     }
   }
   
+  textarea{
+    min-height : 100px;
+  }
+  
   select {
     &.updated{
             background : ${ extensionTheme.blueM };

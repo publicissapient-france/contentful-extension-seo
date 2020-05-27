@@ -5,10 +5,9 @@ export const Container = styled.div`
   border: 1px solid ${ extensionTheme.grey20 };
   border-left : 5px solid ${extensionTheme.blueM}
   background : white;
-  margin-bottom : 10px;
+  margin-bottom : 30px;
   box-sizing : border-box;
-  margin-left : 10px;
-  margin-right : 10px;
+  margin-top : 30px;
  `;
 
 export const Banner = styled.div`

@@ -48,7 +48,8 @@ export const MainContainer = styled.div`
         background-position:center right 0.8em;
         background-repeat : no-repeat, repeat;
         background-size : 12px, 100%;
-        font-size : 13px;       
+        font-size : 13px;     
+        outline: none;  
     }
 
     input {
@@ -78,8 +79,8 @@ export const MainContainer = styled.div`
     label{
         font-size : 12px;
         line-height : 24px;
-        font-weight : 200;
-        color : ${ extensionTheme.grey40 };
+        font-weight : 300;
+        color :  ${ extensionTheme.grey80 };
         font-family :${ contentfulTheme.basicFont };
     }
     

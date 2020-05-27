@@ -5,7 +5,6 @@ const seo = (state = [], action) => {
     switch (action.type) {
         case 'INIT_SEO' :
             if(!Array.isArray(action.seo.pages)){
-                console.log('this is not an Array !!!!')
                 let arrayPage = [];
                 Object.keys(action.seo.pages).map((key, index) =>  {
                     let page = action.seo.pages[key];
@@ -44,6 +43,7 @@ const seo = (state = [], action) => {
             }
 
         case 'INIT_PAGE' :
+            console.log('action.page', action.page);
             if (state.pages && !state.pages.find(page => page.id === action.page.sys.id)) {
                 const newPage = {
                     id: action.page.sys.id,
@@ -85,50 +85,94 @@ const seo = (state = [], action) => {
 
         case 'UPDATE_PAGE_SEO' :
             if (state.pages[action.index] && !state.pages[action.index][action.target]) {
-                const newValue = {
-                    [action.property]: {
-                        [action.locale]: action.value
-                    }
-                }
-                return update(state, {
-                    pages: {
-                        [action.index]: {
-                            $merge: {
-                                [action.target]: newValue
-                            }
+                if(action.locale){
+                    const newValue = {
+                        [action.property]: {
+                            [action.locale]: action.value
                         }
                     }
-                });
-            } else if (state.pages[action.index]
-                && state.pages[action.index][action.target]
-                && !state.pages[action.index][action.target][action.property]) {
-                const newValue = {
-                    [action.locale]: action.value
-                }
-
-                return update(state, {
-                    pages: {
-                        [action.index]: {
-                            [action.target]: {
-                                [action.property]: {$set: newValue}
-                            }
-                        }
-                    }
-                });
-            } else if (state.pages[action.index]
-                && state.pages[action.index][action.target]
-                && state.pages[action.index][action.target][action.property]) {
-                return update(state, {
-                    pages: {
-                        [action.index]: {
-                            [action.target]: {
-                                [action.property]: {
-                                    [action.locale]: {$set: action.value}
+                    return update(state, {
+                        pages: {
+                            [action.index]: {
+                                $merge: {
+                                    [action.target]: newValue
                                 }
                             }
                         }
+                    });
+                }else{
+                    const newValue = {
+                        [action.property]: action.value
                     }
-                });
+                    return update(state, {
+                        pages: {
+                            [action.index]: {
+                                $merge: {
+                                    [action.target]: newValue
+                                }
+                            }
+                        }
+                    });
+                }
+
+            } else if (state.pages[action.index]
+                && state.pages[action.index][action.target]
+                && !state.pages[action.index][action.target][action.property]) {
+                if(action.locale){
+                    const newValue = {
+                        [action.locale]: action.value
+                    }
+                    return update(state, {
+                        pages: {
+                            [action.index]: {
+                                [action.target]: {
+                                    [action.property]: {$set: newValue}
+                                }
+                            }
+                        }
+                    });
+                }else{
+                    return update(state, {
+                        pages: {
+                            [action.index]: {
+                                [action.target]: {
+                                    [action.property]: {$set: action.value}
+                                }
+                            }
+                        }
+                    });
+                }
+
+
+
+
+            } else if (state.pages[action.index]
+                && state.pages[action.index][action.target]
+                && state.pages[action.index][action.target][action.property]) {
+                if(action.locale){
+                    return update(state, {
+                        pages: {
+                            [action.index]: {
+                                [action.target]: {
+                                    [action.property]: {
+                                        [action.locale]: {$set: action.value}
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }else{
+                    return update(state, {
+                        pages: {
+                            [action.index]: {
+                                [action.target]: {
+                                    [action.property]: {$set: action.value}
+                                }
+                            }
+                        }
+                    });
+                }
+
             }
 
         default:

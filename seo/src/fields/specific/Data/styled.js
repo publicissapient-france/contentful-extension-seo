@@ -32,6 +32,10 @@ export const Field = styled.div`
         }
   }
   
+  textarea{
+    min-height : 100px;
+  }
+  
   label {
     margin-top : 10px;
     font-size : 12px;

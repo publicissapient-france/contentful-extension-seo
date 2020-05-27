@@ -63,8 +63,8 @@ export const Title = styled.p`
     padding-bottom : 5px;
     align-self:center;
     font-size:13px;
-    font-weight : 400;
-    opacity:0.7;
+    font-weight : 600;
+    opacity:0.5;
 `;
 
 export const Banner = styled.div`

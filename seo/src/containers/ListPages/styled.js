@@ -3,7 +3,7 @@ import {extensionTheme} from "../../style/theme";
 
 export const Container = styled.div`
   border: 1px solid ${ extensionTheme.grey20 };
-  background : ${ extensionTheme.grey10 };
+  background : ${ extensionTheme.white };
   margin-bottom : 10px;
   width : 100%;
  `;
@@ -52,3 +52,16 @@ export const Banner = styled.div`
     display : flex;
   }
 `;
+
+
+export const Contain = styled.div`
+  box-sizing : border-box;
+  margin: 15px 20px;
+  display : flex;
+  flex-direction : column;
+  
+  select{
+    width : max-content;
+  }
+  
+ `;
