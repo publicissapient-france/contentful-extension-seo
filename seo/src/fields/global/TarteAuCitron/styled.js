@@ -48,6 +48,12 @@ export const Field = styled.div`
         }
   }
   
+  label {
+    font-size : 12px;
+    font-weight : 300;
+    color :  ${ extensionTheme.grey80 };
+  }
+  
   span {
     font-size : 11px;
     color :  ${ extensionTheme.grey50 };

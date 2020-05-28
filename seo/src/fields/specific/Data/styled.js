@@ -1,20 +1,9 @@
 import styled from 'styled-components';
 import { extensionTheme} from "../../../style/theme";
+import {CommonBanner, CommonTitle} from "../../../style/styledComponents";
 
-export const Container = styled.div`
-  padding : 10px;
+export const Container = styled.div` 
   background : ${extensionTheme.white};
-`;
-
-export const Row = styled.div`
-  display : flex;
-`;
-
-export const Column = styled.div`
-  display : flex;
-  flex-direction : column;
-  width : 50%;
-  padding-right : 20px;
 `;
 
 export const Field = styled.div`
@@ -37,15 +26,22 @@ export const Field = styled.div`
     }
   }
   
-  textarea{
-    min-height : 100px;
-  }
-  
   select {
     &.updated{
             background : ${ extensionTheme.blueM };
             color : ${ extensionTheme.white }
         }
+  }
+  
+  textarea{
+    min-height : 100px;
+  }
+  
+  label {
+    margin-top : 10px;
+    font-size : 12px;
+    font-weight : 300;
+    color :  ${ extensionTheme.grey80 }; 
   }
   
   span {
@@ -59,11 +55,12 @@ export const Field = styled.div`
   }
 `;
 
-export const Title = styled.p`
-    line-height : 15px;
-    padding-bottom : 5px;
-    align-self:center;
-    font-size:13px;
-    font-weight : 400;
-    opacity:0.7;
+
+export const Fields = styled.div`
+  padding : 0 10px 10px 10px;
+  border-bottom : 1px solid ${ extensionTheme.grey20 };
 `;
+
+export const Title = styled(CommonTitle)``;
+
+export const Banner = styled(CommonBanner)``;

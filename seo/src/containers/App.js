@@ -3,7 +3,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Extension, MainContainer} from '../style/styledComponents';
 import isEqual from 'lodash/isEqual';
-import {initSEO, initExtensionInformation, initPage, initVisibility, removeDeletedPages} from '../actions';
+import {initSEO, initExtensionInformation, initPage, initPageFormation, initVisibility, removeDeletedPages} from '../actions';
 import GlobalSEO from './GlobalSEO'
 import ListPages from './ListPages'
 import { extractAssetUrl } from '../utils/functions'
@@ -44,7 +44,12 @@ class App extends React.Component {
 
         const pagesOfSpace = await this.getPagesOfSpace();
         pagesOfSpace.map( page => this.props.dispatch(initPage(page)));
-        this.props.dispatch(removeDeletedPages(pagesOfSpace))
+        //this.props.dispatch(removeDeletedPages(pagesOfSpace))
+
+        const formationsOfSpace = await this.getFormationsOfSpace();
+        formationsOfSpace.map( page => this.props.dispatch(initPageFormation(page)));
+
+        this.props.dispatch(removeDeletedPages([...pagesOfSpace, ...formationsOfSpace]))
 
     }
 
@@ -110,6 +115,17 @@ class App extends React.Component {
                 let pages = result.items.map(entry => entry)
                     .filter(page => page.fields.type[this.props.extension.locales.default] === 'internal')
                 return pages;
+            });
+    }
+
+    getFormationsOfSpace  = async () => {
+        return this.props.extension.space
+            .getEntries({
+                'content_type': 'formation'
+            })
+            .then(result => {
+                let formations = result.items.map(entry => entry)
+                return formations;
             });
     }
 
