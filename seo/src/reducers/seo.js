@@ -71,6 +71,36 @@ const seo = (state = [], action) => {
                }
             }
 
+          case 'INIT_PAGE_FORMATION' :
+            console.log('action.page', action.page);
+            if (state.pages && !state.pages.find(page => page.id === action.page.sys.id)) {
+                const newFormation = {
+                    id: action.page.sys.id,
+                    name: action.page.fields.name,
+                    slug: action.page.fields.slug,
+                    type : 'formation'
+                };
+                return update(state, {
+                    pages: {
+                        $push: [
+                            newFormation
+                        ]
+                    }
+                });
+            }else if(state.pages && state.pages.find(page => page.id === action.page.sys.id)){
+                const formationOnStore = state.pages.find(page => page.id === action.page.sys.id);
+               if(!isEqual(formationOnStore.name, action.page.fields.name ) || !isEqual(formationOnStore.slug, action.page.fields.slug )){
+                   return update(state, {
+                       pages: {
+                           [state.pages.indexOf(formationOnStore)]: {
+                               name: { $set:  action.page.fields.name },
+                               slug: { $set: action.page.fields.slug }
+                           }
+                       }
+                   });
+               }
+            }
+
         case 'REMOVE_DELETED_PAGES' :
             if (action.pages) {
                 let ids = action.pages.map(page => page.sys.id);
@@ -82,6 +112,7 @@ const seo = (state = [], action) => {
                     }
                 });
             }
+
 
         case 'UPDATE_PAGE_SEO' :
             if (state.pages[action.index] && !state.pages[action.index][action.target]) {

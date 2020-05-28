@@ -16,6 +16,11 @@ export const initPage = (page) => ({
     page : page
 });
 
+export const initPageFormation = (page) => ({
+    type: 'INIT_PAGE_FORMATION',
+    page : page
+});
+
 export const updatePage = (target, property, value, index, locale) => ({
     type: 'UPDATE_PAGE_SEO',
     target: target,

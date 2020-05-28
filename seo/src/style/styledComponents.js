@@ -205,3 +205,39 @@ export const Icon = styled.div`
   
 `;
 
+export const CommonBanner = styled.div`
+  display : flex;
+  width : 100%;
+  height : 40px;
+  padding-left : 10px;
+  background : ${ extensionTheme.grey10 };
+  box-sizing : border-box;
+  font-weight : 300;
+  border-bottom : 1px solid ${ extensionTheme.grey20 }; 
+  justify-content: space-between;
+  padding-right : 3px;
+  
+  & h4{
+    line-height : 15px;
+    align-self:center;
+    font-size:13px;
+    font-weight : 700;
+    opacity:0.7;
+    margin: 0;
+    padding : 10px 5px;
+    
+  }
+  
+  &>div{
+    display : flex;
+  }  
+`;
+
+export const CommonTitle = styled.p`
+    line-height : 15px;
+    align-self:center;
+    font-size:13px;
+    font-weight : 600;
+    opacity:0.5;
+`;
+

@@ -5,7 +5,6 @@ export const Container = styled.div`
   border: 1px solid ${ extensionTheme.grey20 };
   border-left : 5px solid ${extensionTheme.blueM}
   background : white;
-  margin-bottom : 30px;
   box-sizing : border-box;
   margin-top : 30px;
  `;

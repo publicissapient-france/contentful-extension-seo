@@ -14,7 +14,7 @@ class PageSEO extends Component {
         return (
             <Container>
                 <Banner>
-                    <h4>{page.slug[Object.keys(page.slug)[0]]}</h4>
+                    <h4>{page.name[Object.keys(page.name)[0]]}</h4>
                     <NoIndex index={index}/>
                 </Banner>
                 <div>
