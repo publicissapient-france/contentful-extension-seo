@@ -56,7 +56,7 @@ export const Banner = styled.div`
 
 export const Contain = styled.div`
   box-sizing : border-box;
-  margin: 15px 20px;
+  padding: 15px 20px;
   display : flex;
   flex-direction : column;
   
