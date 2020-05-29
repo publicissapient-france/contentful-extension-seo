@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {Container, Banner, Contain} from "./styled";
 import OGP from '../../fields/global/OGP';
 import GoogleTagManager from '../../fields/global/GoogleTagManager';
-import TarteAuCitron from '../../fields/global/TarteAuCitron';
 
 class GlobalSEO extends Component {
     render () {
@@ -14,7 +13,6 @@ class GlobalSEO extends Component {
                 <Contain>
                     <OGP/>
                     <GoogleTagManager/>
-                    <TarteAuCitron/>
                 </Contain>
             </Container>
         );
