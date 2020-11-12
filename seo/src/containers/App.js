@@ -1,125 +1,90 @@
 import debounce from 'debounce-fn';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Extension, MainContainer} from '../style/styledComponents';
 import isEqual from 'lodash/isEqual';
-import {initSEO, initExtensionInformation, initPage, initPageFormation, initVisibility, removeDeletedPages} from '../actions';
+import {
+    initSEO,
+    initExtensionInformation,
+    initPage,
+    initPageFormation,
+    initVisibility,
+    removeDeletedPages
+} from '../actions';
 import GlobalSEO from './GlobalSEO'
 import ListPages from './ListPages'
-import { extractAssetUrl } from '../utils/functions'
+import {extractAssetUrl} from '../utils/functions'
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
+const App = ({seo, extension, dispatch}) => {
 
-        this.state = {
-            openAddSectionTop: false
-        };
-
-        this.onViewingEntryUpdated = debounce(this.onViewingEntryUpdated, {
-            wait: 250
-        });
-    }
-
-    componentDidMount = async () => {
-        if (this.props.extension.field && this.props.extension.field.getValue()) {
-            this.props.dispatch(initSEO(JSON.parse(this.props.extension.field.getValue().value)));
-            this.props.dispatch(initExtensionInformation(this.props.extension));
-            this.props.dispatch(initVisibility(this.props.extension.locales.default));
+    useEffect(() => {
+        if (extension.field && extension.field.getValue()) {
+            dispatch(initSEO(JSON.parse(extension.field.getValue().value)));
+            dispatch(initExtensionInformation(extension));
+            dispatch(initVisibility(extension.locales.default));
         }
 
-        this.detachFns = [];
+        debounce(onViewingEntryUpdated, {wait: 250});
 
-        const fields = this.props.extension.entry.fields;
+        let detachFns = [];
+
+        const fields = extension.entry.fields;
         for (let key in fields) {
-            this.detachFns.push(
-                fields[key].onValueChanged(this.onViewingEntryUpdated)
+            detachFns.push(
+                fields[key].onValueChanged(onViewingEntryUpdated)
             );
         }
-        this.detachFns.push(
-            this.props.extension.entry.onSysChanged(this.onViewingEntryUpdated)
+        detachFns.push(
+            extension.entry.onSysChanged(onViewingEntryUpdated)
         );
 
-        this.props.extension.window.startAutoResizer();
+        extension.window.startAutoResizer();
 
-        const pagesOfSpace = await this.getPagesOfSpace();
-        pagesOfSpace.map( page => this.props.dispatch(initPage(page)));
-        //this.props.dispatch(removeDeletedPages(pagesOfSpace))
+        async function initialization() {
+            const pagesOfSpace = await getPagesOfSpace();
+            pagesOfSpace.map(page => dispatch(initPage(page)));
 
-        const formationsOfSpace = await this.getFormationsOfSpace();
-        formationsOfSpace.map( page => this.props.dispatch(initPageFormation(page)));
+            const formationsOfSpace = await getFormationsOfSpace();
+            formationsOfSpace.map(page => dispatch(initPageFormation(page)));
 
-        this.props.dispatch(removeDeletedPages([...pagesOfSpace, ...formationsOfSpace]))
+            dispatch(removeDeletedPages([...pagesOfSpace, ...formationsOfSpace]))
 
-    }
+        }    // Execute the created function directly
+        initialization();
 
-    componentDidUpdate = prevProps => {
-        if (!isEqual(prevProps.seo, this.props.seo)) {
-            if (!this.props.extension.field.getValue()) {
-                this.setFieldValue();
-            }
-
-            if (this.props.extension.field.getValue() &&
-                this.props.extension.field.getValue().value &&
-                !isEqual(this.props.seo, JSON.parse(this.props.extension.field.getValue().value))) {
-                this.setFieldValue();
-            }
+        return () => {
+            // Anything in here is fired on component unmount.
+            detachFns.forEach(detach => detach());
+            extension.window.stopAutoResizer();
         }
-    }
 
-    componentWillUnmount = () => {
-        this.detachFns.forEach(detach => detach());
-        this.props.extension.window.stopAutoResizer();
-    }
+    }, []);
 
-    setFieldValue = () => {
-        this.props.extension.field.removeValue().then(() => {
-            const seo = this.props.store.getState().seo;
-            const staticResources = extractAssetUrl(seo);
+    useEffect(() => {
+        if (!extension.field.getValue()) {
+            setFieldValue();
+        }
 
-            this.props.extension.field.setValue({
-                value: JSON.stringify(seo),
-                staticResources : staticResources.length !== 0 ? staticResources : ['no-static-resources']
-            }).then(() => {
-                console.log('NEW SEO VALUE', this.props.extension.field.getValue())
-            });
-        });
+        if (extension.field.getValue() && extension.field.getValue().value && !isEqual(seo, JSON.parse(extension.field.getValue().value))) {
+            setFieldValue();
+        }
+    }, [seo])
 
-    }
+    const getPagesOfSpace = async () => {
 
-
-    getElementById = id => {
-        return this.props.extension.space.getEntries({
-            'sys.id': id
-        }).then(function (result) {
-            return result.items[0];
-        });
-    }
-
-
-    getAssetsUrlById = id => {
-        return this.props.extension.space
-            .getAsset(id)
-            .then(result => {
-                return result.fields.file[this.props.extension.locales.default].url;
-            });
-    }
-
-    getPagesOfSpace  = async () => {
-
-        return this.props.extension.space
+        return extension.space
             .getEntries({
                 'content_type': 'page'
             })
             .then(result => {
                 let pages = result.items.map(entry => entry)
-                    .filter(page => page.fields.type[this.props.extension.locales.default] === 'internal')
+                    .filter(page => page.fields.type[extension.locales.default] === 'internal')
                 return pages;
             });
     }
 
-    getFormationsOfSpace  = async () => {
-        return this.props.extension.space
+    const getFormationsOfSpace = async () => {
+        return extension.space
             .getEntries({
                 'content_type': 'formation'
             })
@@ -129,35 +94,62 @@ class App extends React.Component {
             });
     }
 
-    onError = error => {
-        this.props.extension.notifier.error(error.message);
+    const setFieldValue = () => {
+        extension.field.removeValue().then(() => {
+            const staticResources = extractAssetUrl(seo);
+
+            extension.field.setValue({
+                value: JSON.stringify(seo),
+                staticResources: staticResources.length !== 0 ? staticResources : ['no-static-resources']
+            }).then(() => {
+                console.log('NEW SEO VALUE', extension.field.getValue())
+            });
+        });
     }
 
-    onViewingEntryUpdated = async () => {
-        const latestSys = this.props.extension.entry.getSys();
+    const getElementById = id => {
+        return extension.space.getEntries({
+            'sys.id': id
+        }).then(function (result) {
+            return result.items[0];
+        });
     }
 
-    openEntry = entryId => {
+    const getAssetsUrlById = id => {
+        return extension.space
+            .getAsset(id)
+            .then(result => {
+                return result.fields.file[extension.locales.default].url;
+            });
+    }
+
+    const onError = error => {
+        extension.notifier.error(error.message);
+    }
+
+    const onViewingEntryUpdated = async () => {
+        const latestSys = extension.entry.getSys();
+    }
+
+    const openEntry = entryId => {
         return () => {
-            this.props.extension.navigator.openEntry(entryId, {
+            extension.navigator.openEntry(entryId, {
                 slideIn: true
             });
         };
     }
 
-    render = () => {
-        return (
-            <Extension>
-                <MainContainer className={'container'}>
-                    <GlobalSEO/>
-                    <ListPages/>
-                </MainContainer>
-            </Extension>
-        );
-    }
+    return (
+        <Extension>
+            <MainContainer>
+                <GlobalSEO/>
+                <ListPages/>
+            </MainContainer>
+        </Extension>
+    );
 }
 
-const mapStateToProps = ({ seo }) => ({
+const mapStateToProps = ({seo}) => ({
     seo: seo,
 });
 export default connect(mapStateToProps)(App);
