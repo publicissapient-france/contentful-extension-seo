@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import mapKeys from 'lodash/mapKeys'
 
 const getLanguageISO = language => language.split('-')[0];
 const getCountryISO = language => language.split('-')[1];
@@ -7,10 +7,10 @@ const arrayToString = array => array.join('');
 const extractAssetUrl = ( seo ) => {
     let urls = [];
 
-    _.mapKeys(seo.pages, (value, key) => {
-        _.mapKeys(value, (value, key) => {
+    mapKeys(seo.pages, (value, key) => {
+        mapKeys(value, (value, key) => {
             if(value.image){
-                _.mapKeys(value.image, (value, key) => {
+                mapKeys(value.image, (value, key) => {
                     urls.push(value)
                 })
             }

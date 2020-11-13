@@ -6,7 +6,6 @@ export const Container = styled.div`
   background : ${extensionTheme.white};
 `;
 
-
 export const Field = styled.div`
   display : flex;
   flex-direction : column;

@@ -6,8 +6,6 @@ export const Container = styled.div`
   background : ${extensionTheme.white};
 `;
 
-
-
 export const Title = styled(CommonTitle)``;
 
 export const UrlLink = styled.p`

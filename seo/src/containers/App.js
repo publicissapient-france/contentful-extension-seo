@@ -1,7 +1,7 @@
 import debounce from 'debounce-fn';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Extension, MainContainer} from '../style/styledComponents';
+import {Extension} from '../style/styledComponents';
 import isEqual from 'lodash/isEqual';
 import {
     initSEO,
@@ -20,9 +20,9 @@ const App = ({seo, extension, dispatch}) => {
     useEffect(() => {
         if (extension.field && extension.field.getValue()) {
             dispatch(initSEO(JSON.parse(extension.field.getValue().value)));
-            dispatch(initExtensionInformation(extension));
-            dispatch(initVisibility(extension.locales.default));
         }
+        dispatch(initExtensionInformation(extension));
+        dispatch(initVisibility(extension.locales.default));
 
         debounce(onViewingEntryUpdated, {wait: 250});
 
@@ -49,7 +49,8 @@ const App = ({seo, extension, dispatch}) => {
 
             dispatch(removeDeletedPages([...pagesOfSpace, ...formationsOfSpace]))
 
-        }    // Execute the created function directly
+        }
+
         initialization();
 
         return () => {
@@ -71,7 +72,6 @@ const App = ({seo, extension, dispatch}) => {
     }, [seo])
 
     const getPagesOfSpace = async () => {
-
         return extension.space
             .getEntries({
                 'content_type': 'page'
@@ -107,22 +107,6 @@ const App = ({seo, extension, dispatch}) => {
         });
     }
 
-    const getElementById = id => {
-        return extension.space.getEntries({
-            'sys.id': id
-        }).then(function (result) {
-            return result.items[0];
-        });
-    }
-
-    const getAssetsUrlById = id => {
-        return extension.space
-            .getAsset(id)
-            .then(result => {
-                return result.fields.file[extension.locales.default].url;
-            });
-    }
-
     const onError = error => {
         extension.notifier.error(error.message);
     }
@@ -141,10 +125,8 @@ const App = ({seo, extension, dispatch}) => {
 
     return (
         <Extension>
-            <MainContainer>
-                <GlobalSEO/>
-                <ListPages/>
-            </MainContainer>
+            <GlobalSEO/>
+            <ListPages/>
         </Extension>
     );
 }

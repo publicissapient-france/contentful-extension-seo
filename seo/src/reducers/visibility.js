@@ -14,8 +14,6 @@ const visibility = (state = [], action) => {
             selectedLanguage: { $set: action.language }
         });
 
-
-
     default:
         return state;
     }

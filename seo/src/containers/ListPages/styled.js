@@ -66,5 +66,4 @@ export const Contain = styled.div`
   select{
     width : max-content;
   }
-  
  `;

@@ -1,91 +1,76 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Container, Banner, Contain} from "./styled";
 import PageSEO from '../PageSEO'
 import ListPagesFormations from '../ListPagesFormations'
 
-class ListPages extends Component {
-    constructor(props) {
-        super(props);
+const ListPages = ({pages, defaultLocale, extension}) => {
+    const [selectedPage, setSelectedPage] = useState('');
+    const [displayPagesFormations, setDisplayPagesFormations] = useState(false);
 
-        this.state = {
-            selectedPage: '',
-            displayPagesFormations : false,
-        };
-    }
+    useEffect(() => {
 
-    componentDidMount = async () => {
-        if(this.props.extension && this.props.extension.space){
-            await this.checkContentTypes();
+        async function initialization() {
+            if (extension && extension.space) {
+                await checkContentTypes();
+            }
+
         }
-    };
 
-    componentDidUpdate = async (prevProps) => {
-        if (this.props.extension !== prevProps.extension) {
-            await this.checkContentTypes();
-        }
-    }
+        initialization();
 
+    }, [extension]);
 
-
-    checkContentTypes = async () => {
-        await this.props.extension.space.getContentTypes().then( result => {
-            if( (result.items.find(item => item.name === 'Category')) && (result.items.find(item => item.name === 'Formation')) ){
-                this.setState({
-                    displayPagesFormations : true
-                })
+    const checkContentTypes = async () => {
+        await extension.space.getContentTypes().then(result => {
+            if ((result.items.find(item => item.name === 'Category')) && (result.items.find(item => item.name === 'Formation'))) {
+                setDisplayPagesFormations(true);
             }
         });
     }
 
+    const getSelectedPage = (id) => pages.find(page => page.id === id);
 
+    const getIndexOnStore = (page) => pages.indexOf(page);
 
-    getSelectedPage = (id) => this.props.pages.find(page => page.id === id)
-
-    getIndexOnStore = (page) => this.props.pages.indexOf(page)
-
-    render() {
-        const {pages, defaultLocale} = this.props;
-        return (
-            <Container>
-                <Banner>
-                    <h4>Pages SEO </h4>
-                </Banner>
-
-                <Contain>
-                    <label>Select Page</label>
-                    <select value={this.state.selectedPage}
-                            onChange={(e) => this.setState({selectedPage: e.target.value})}
-                    >
-                        <option value={''}></option>
-                        {
-                            pages ?
-                                pages.filter( page =>  page.type !== 'formation')
-                                    .sort((a, b) => a.name[defaultLocale].localeCompare(b.name[defaultLocale])).map(page =>
-                                    <option key={page.id} value={page.id}>{page.name[defaultLocale]}</option>)
-                                : null
-                        }
-                    </select>
+    return (
+        <Container>
+            <Banner>
+                <h4>Pages SEO </h4>
+            </Banner>
+            <Contain>
+                <label>Select Page</label>
+                <select value={selectedPage} onChange={(e) => setSelectedPage(e.target.value)}>
+                    <option value={''}></option>
                     {
-                        this.state.selectedPage && this.state.selectedPage !== '' ?
-                            <PageSEO page={this.getSelectedPage(this.state.selectedPage)}
-                                     index={this.getIndexOnStore(this.getSelectedPage(this.state.selectedPage))}/> : null
+                        pages &&
+                        pages.filter(page => page.type !== 'formation')
+                            .sort((a, b) => a.name[defaultLocale].localeCompare(b.name[defaultLocale])).map(page =>
+                            <option key={page.id} value={page.id}>{page.name[defaultLocale]}</option>)
+
                     }
-                </Contain>
+                </select>
                 {
-                    this.state.displayPagesFormations ? <ListPagesFormations/> : null
+                    selectedPage && selectedPage !== '' ?
+                        <PageSEO page={getSelectedPage(selectedPage)}
+                                 index={getIndexOnStore(getSelectedPage(selectedPage))}/> : null
                 }
-            </Container>
-        );
-    }
+            </Contain>
+            {
+                displayPagesFormations && <ListPagesFormations/>
+            }
+        </Container>
+    );
 }
 
+
 ListPages.propTypes = {
-    pages: PropTypes.array
+    pages: PropTypes.array,
+    defaultLocale: PropTypes.string
 };
 
-const mapStateToProps = ( {seo, extension}) => ({
+const mapStateToProps = ({seo, extension}) => ({
     pages: seo.pages,
     extension: extension,
     defaultLocale: extension && extension.locales ? extension.locales.default : null

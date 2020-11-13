@@ -2,15 +2,12 @@ import styled from 'styled-components';
 import { contentfulTheme, extensionTheme } from './theme';
 
 export const Extension = styled.div`
-    width : auto;
+ width : auto;
     height : auto;
     p {
         margin : 0;
     }
-`;
-export const MainContainer = styled.div`
     border-radius : 2px;
-    //box-shadow : 0 1px 3px rgba(0,0,0,0.08);
     padding-bottom : 20px;
     margin-bottom : 20px;
     padding-top : 20px;
