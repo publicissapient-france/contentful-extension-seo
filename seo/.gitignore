@@ -19,4 +19,4 @@ node_modules/
 build/*
 !/build/index.html
 
-.contentfulrc.json
+src/.contentfulrc.json

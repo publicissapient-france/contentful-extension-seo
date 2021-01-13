@@ -15,11 +15,8 @@ const ListPages = ({pages, defaultLocale, extension}) => {
             if (extension && extension.space) {
                 await checkContentTypes();
             }
-
         }
-
         initialization();
-
     }, [extension]);
 
     const checkContentTypes = async () => {
@@ -48,7 +45,6 @@ const ListPages = ({pages, defaultLocale, extension}) => {
                         pages.filter(page => page.type !== 'formation')
                             .sort((a, b) => a.name[defaultLocale].localeCompare(b.name[defaultLocale])).map(page =>
                             <option key={page.id} value={page.id}>{page.name[defaultLocale]}</option>)
-
                     }
                 </select>
                 {
