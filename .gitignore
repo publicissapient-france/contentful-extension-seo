@@ -8,8 +8,7 @@ yarn-error.log*
 # dotenv environment variables file
 .env
 .idea
-seo/src/.contentfulrc.json
-
+seo/.contentfulrc.json
 
 # parcel-bundler cache
 .cache
