@@ -8,7 +8,7 @@ yarn-error.log*
 # dotenv environment variables file
 .env
 .idea
-seo/.contentfulrc.json
+.contentfulrc.json
 
 # parcel-bundler cache
 .cache
@@ -17,6 +17,6 @@ seo/.contentfulrc.json
 node_modules/
 
 # Build
-build/*
-!/build/index.html
+seo/build/*
+!/seo/build/index.html
 
