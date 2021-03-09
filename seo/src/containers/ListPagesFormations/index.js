@@ -66,7 +66,7 @@ const ListPagesFormations = ({pages, defaultLocale, extension}) => {
             <select value={categoryFilter}
                     onChange={(e) => setCategoryFilter(e.target.value)}
             >
-                <option value={''}></option>
+                <option value={''}>select formation page</option>
                 {
                     categories &&
                     categories.map(category => <option key={category} value={category}>{category}</option>)

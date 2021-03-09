@@ -39,7 +39,7 @@ const ListPages = ({pages, defaultLocale, extension}) => {
             <Contain>
                 <label>Select Page</label>
                 <select value={selectedPage} onChange={(e) => setSelectedPage(e.target.value)}>
-                    <option value={''}></option>
+                    <option value={''}>select page</option>
                     {
                         pages &&
                         pages.filter(page => page.type !== 'formation')
